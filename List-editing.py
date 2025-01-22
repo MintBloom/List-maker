@@ -1,4 +1,5 @@
 
+import pickle
 
 def main() -> None:
         dictionary = retrievedata()
@@ -6,35 +7,46 @@ def main() -> None:
                 pass
         else:
                 dictionary = UserListCreate() # if no previous file is found, a dictionary is created with names&lists as its keys&values
-        Pick_a_list(dictionary)
+        updated_dictionary = Pick_a_list(dictionary)
+        dumpdata(updated_dictionary)
+        print ('All done. Saved to a file :3')
+
 
 def Pick_a_list(dict_):    # parameter is a dictionary
         # main function for editing lists within dictionary
-        print ('You have these lists: ')
-        cycleThruKeys(dict_) # shows the names of all the lists which the user has created
-        print ('Which list would you like to edit?')
-        edit_choice = input('\n--> ')
-        print(f'This is the current state of {edit_choice}:\n{dict_.get(edit_choice)}') # shows the list that the user has chosen to edit
-        dict_.update({edit_choice:edit_list_menu(edit_choice, dict_)}) # will update the dictionary with the new list
-        print (dict_)   # CURRENT CODE ENDS HERE
-
+        while True:
+                print ('You have these lists: ')
+                cycleThruKeys(dict_) # shows the names of all the lists which the user has created
+                print ('Which list would you like to edit?')
+                edit_choice = input('\n--> ')
+                print(f'This is the current state of {edit_choice}:\n{dict_.get(edit_choice)}') # shows the list that the user has chosen to edit
+                dict_.update({edit_choice:edit_list_menu(edit_choice, dict_)}) # will update the dictionary with the new list
+                print('Save and quit the program?')
+                choice = input('--> ')
+                if choice in ('no', 'No'):
+                        True
+                else:
+                        break
+        return dict_
 
 
 
 
 def retrievedata() -> dict:
+        # retrieves data from a save, if file does not exist then nothing is returned
         try:
-                f = open('ListsInDictionaries.txt', 'r')
+                with open('ListsInDictionaries.pkl', 'rb') as f:
+                        loaded_dictf = pickle.load(f)
         except:
                 print('No retrievable file. New file and list will be created.')
                 return None
-        incomingdata = f.read()
         f.close
-        return incomingdata
+        return loaded_dictf
 
 def dumpdata(DataToDump) -> None:
-        f = open('ListsInDictionaries.txt', 'w')
-        f.write(DataToDump)
+        # saves the dictionary with lists in binary as a .pkl document using the pickle module
+        with open('ListsInDictionaries.pkl', 'wb') as f:
+                pickle.dump(DataToDump, f)
         f.close()
 
 
@@ -56,7 +68,7 @@ def edit_list_menu (name, dict):
                 
 def edit_list_menu_loop(list): # includes option which allows for a list to be edited times
         print ('What would you like to do? (Pick a number)')
-        print ('- (1)Add something\n- (2)Add something in a particular position\n- (3)Delete somthing\n- (4)Quit editing this list')
+        print ('- (1)Add something\n- (2)Add something in a particular position\n- (3)Delete somthing')
         choice = int(input())
         match choice:
                 case 1:
