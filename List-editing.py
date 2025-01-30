@@ -81,9 +81,6 @@ def edit_list_menu_loop(list): # includes option which allows for a list to be e
                         list = del_from_list(list)
                         return list # returns new and updated list
 
-
-
-
         
 def add_to_list(list):
         print('What would you like to add?')
@@ -119,12 +116,6 @@ def valueFromDict(name, dict) -> list:
         list = dict.get(name)
         return list
 
-def keyFromDict(name) -> str:
-        # will return a single key from the dictionary
-        None
-
-
-
 
 
 def UserListCreate() -> dict:
@@ -140,13 +131,12 @@ def UserListCreate() -> dict:
                         break           # loop breaks here if user does not respond with yes
         return dictionary
 
+
 def ListName() -> str:
         # create a name which will be associated with a list from ListMake()
         print('What would you like the list name to be?')
         new_name = str(input('--> '))
         return new_name
-
-
 
 
 
@@ -160,6 +150,7 @@ def dictionarymake(name, list) -> dict: # parameters 'name' will be used a key a
         list_names = {}  # dictionary created
         list_names[name] = list   # adds entry to the dictionary with the corresponding function parameters
         return list_names
+
 
 if __name__ == '__main__':
         main()
