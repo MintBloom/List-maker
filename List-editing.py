@@ -65,7 +65,7 @@ def edit_list_menu (name, dict):
                 else:
                         break
         return list # returns the new value of the list
-                
+
 def edit_list_menu_loop(list): # includes option which allows for a list to be edited times
         print ('What would you like to do? (Pick a number)')
         print ('- (1)Add something\n- (2)Add something in a particular position\n- (3)Delete somthing')
